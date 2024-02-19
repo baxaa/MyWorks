@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Currencies</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .blue-background {
+            background-color: blue;
+            color: white;
+        }
+        .green-background {
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<table id="cryptoTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Symbol</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1')
+        .then(res => res.json())
+        .then(data => {
+            tableBody = document.querySelector('#cryptoTable tbody');
+
+            data.silce(0, 5).forEach((currency, index) =>{
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${currency.id}</td><td>${currency.symbol}</td><td>${currency.name}</td>`;
+                // console(data.id)
+                if (index <= 5) {
+                    row.classList.add('blue-background');
+                }  
+
+                if(currency.symbol === 'usdt'){
+                    row.classList.add('green-background');
+                }
+                tableBody.appendChild(row);
+            });
+        });
+
+</script>
+
+</body>
+</html>
